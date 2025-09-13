@@ -1,0 +1,93 @@
+.login-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  max-width: 400px;
+  margin: 100px auto;
+  background-color: #ffffff;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.1);
+  color: #333;
+}
+
+img{
+    height: 100px;
+}
+
+h2 {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #333;
+  margin: 0;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.login-logo{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+label {
+  font-size: 1rem;
+  font-weight: 500;
+  color: black;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+input {
+  color: black;
+  padding: 8px;
+  font-size: 1rem;
+  border-radius: 4px;
+  height: 50px;
+  border: 1px solid #ccc;
+}
+
+
+.submit-btn{
+  align-self: center;
+  background-color: #ff4da6;
+  border:0;
+  color: white;
+  height: 30px;
+  width: 100%;
+  border-radius: 20px;
+  font-size:18px;
+  transition: all 0.2s ease-in-out;
+}
+
+.submit-btn:hover{
+  filter: brightness(85%);
+}
+
+.submit-btn:active{
+  filter: brightness(70%);
+}
+
+.page-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 100vh;
+}
+
+.register-link{
+  text-decoration: none;
+  color: #333;
+  font-size:18px;
+  transition: all 0.2s ease-in-out;
+}
+
+.register-link:hover{
+  filter:contrast(45%);
+}
+
+.register-link:active{
+  filter: contrast(35%);
+}
+
