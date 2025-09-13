@@ -1,0 +1,62 @@
+.HomeContainer{
+  background-image:url("../Assets/bg.jpg");
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  min-height:100vh;
+  height:100%;
+  width:100%;
+}
+
+.HomeMainContainer {
+  flex: 1;
+  max-width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 40px;
+  box-sizing: border-box;
+}
+
+.HomeButtons {
+  display: flex;
+  flex-direction: row;
+  gap: 15px; 
+}
+
+
+.HomeMainContainer h1 {
+  font-size: 3rem;
+  margin-bottom: 10px;
+  color: #222;
+}
+
+.HomeMainContainer h3 {
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+  color: #555;
+}
+
+.HomeMainContainer button {
+  margin-right: 15px;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  background-color: #ff4da6;
+  margin:10px;
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.HomeMainContainer button:hover {
+  background-color: #ff1493;
+}
+
+.HomeContainer::after {
+  content: "";
+  flex: 1;
+  background: #f9f9f9;
+}
