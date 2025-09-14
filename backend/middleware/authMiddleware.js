@@ -16,6 +16,6 @@ const authMiddleware = (req, res, next) => {
     console.error("Auth error:", err.message);
     return res.status(401).json({ error: "Invalid or expired token" });
   }
-};
+}; 
 
 module.exports = authMiddleware;

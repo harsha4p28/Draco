@@ -39,6 +39,7 @@ app.use(
 );
 
 app.use('/api', require('./routes/authRoutes'));
+app.use('/api/posts', require('./routes/postRoutes'));
 
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);

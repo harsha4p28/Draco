@@ -1,0 +1,110 @@
+.postContainer {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 80px 20px; 
+  background: #f9f9f9;
+}
+
+.postMainContainer {
+  background: #fff;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+  width: 100%;
+  max-width: 600px;
+}
+
+.postMainContainer h1 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.postMainContainer input[type="text"],
+.postMainContainer textarea,
+.postMainContainer select,
+.postMainContainer input[type="file"] {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+.postMainContainer textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.tagList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.tagItem {
+  background: #ff69b4;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.9rem;
+}
+
+.tagItem button {
+  background: transparent;
+  border: none;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.formButtons {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.formButtons button {
+  flex: 1;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  color: #fff;
+  transition: 0.3s;
+}
+
+.formButtons button[type="submit"] {
+  background: #ff69b4;
+}
+
+.formButtons button[type="submit"]:hover {
+  background: #ff1493;
+}
+
+.formButtons button[type="reset"] {
+  background: #666;
+}
+
+.formButtons button[type="reset"]:hover {
+  background: #444;
+}
+
+@media (max-width: 768px) {
+  .postMainContainer {
+    padding: 20px;
+  }
+
+  .formButtons {
+    flex-direction: column;
+  }
+}
