@@ -7,6 +7,8 @@ const Post = () => {
   const [content, setContent] = useState("")
   const [tags, setTags] = useState([])
   const [image, setImage] = useState(null)
+  const [errMsg, setErrMsg]= useState("")
+  const [success, setSuccess] = useState(false)
 
   const handleTagChange = (e) => {
     const value = e.target.value
@@ -31,16 +33,23 @@ const Post = () => {
     try {
       const res = await fetch(`${config.apiUrl}/posts`, {
         method: "POST",
+        credentials: 'include',
         body: formData
       })
+      if (res.ok){
       const data = await res.json()
       console.log("Post saved:", data)
       setTitle("")
       setContent("")
       setTags([])
       setImage(null)
+      setSuccess(true)
+      } else{
+        setErrMsg("Error saving post. Please try again.")
+      }
     } catch (err) {
       console.error("Error saving post:", err)
+      setErrMsg("Error saving post. Please try again.")
     }
   }
 
@@ -86,7 +95,8 @@ const Post = () => {
             accept='image/*'
             onChange={(e) => setImage(e.target.files[0])}
           />
-
+          {errMsg && <p style={{ color: 'red' }}>{errMsg}</p>}
+          {success && <p style={{ color: 'green' }}>Post added successfully!</p>}
           <div className="formButtons">
             <button type='submit'>Add Post</button>
             <button type='reset' onClick={() => {setTitle(""); setContent(""); setTags([]); setImage(null);}}>Reset</button>

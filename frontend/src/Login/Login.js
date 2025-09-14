@@ -5,7 +5,7 @@ import config from "../config"
 
 
 
-export default function Login() {
+export default function Login({setLoggedIn}) {
     const [formData, setFormData] = useState({
         username: "",
         password: "",
@@ -37,6 +37,7 @@ export default function Login() {
             if (res.ok) {
                 setFormData({ username: "", password: "" });
                 setSuccess(true);
+                setLoggedIn(true);
                 setTimeout(() => {
                     setSuccess(false);
                     navigate("/")

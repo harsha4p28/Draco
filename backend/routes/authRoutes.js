@@ -25,14 +25,12 @@ const generateTokens = (user) => {
 router.post("/register", async (req, res) => {
   try {
     const { email, username, password, confirmPassword } = req.body;
-
     if (!email || !username || !password || !confirmPassword) {
       return res.status(400).json({ error: "All fields are required" });
     }
     if (password !== confirmPassword) {
       return res.status(400).json({ error: "Passwords do not match" });
     }
-
     const existingEmail = await User.findOne({ email });
     if (existingEmail) {
       return res.status(400).json({ error: "Email already registered" });
@@ -41,15 +39,11 @@ router.post("/register", async (req, res) => {
     if (existingUser) {
       return res.status(400).json({ error: "Username already taken" });
     }
-
     const hashedPassword = await bcrypt.hash(password, 10);
-
     const user = new User({ email, username, password: hashedPassword });
     await user.save();
-
     res.status(201).json({ message: "Registered successfully!" });
   } catch (err) {
-    console.error(err);
     res.status(500).json({ error: "Server error during registration" });
   }
 });
@@ -68,16 +62,22 @@ router.post("/login", async (req, res) => {
 
     const { accessToken, refreshToken } = generateTokens(user);
 
+    res.cookie("accessToken", accessToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "none",
+      maxAge: 15 * 60 * 1000,
+    });
+
     res.cookie("refreshToken", refreshToken, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
-      sameSite: "strict",
+      sameSite: "none",
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
 
-    res.status(201).json({ message: "Login successful", accessToken });
+    res.status(200).json({ message: "Login successful" });
   } catch (err) {
-    console.error(err);
     res.status(500).json({ error: "Server error during login" });
   }
 });
@@ -102,14 +102,20 @@ router.post("/refresh", (req, res) => {
       process.env.JWT_SECRET,
       { expiresIn: process.env.JWT_EXPIRES_IN || "15m" }
     );
-    res.json({ accessToken });
+    res.cookie("accessToken", accessToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "none",
+      maxAge: 15 * 60 * 1000,
+    });
+    res.json({ message: "Access token refreshed" });
   } catch (err) {
-    console.error("Refresh error:", err.message);
     return res.status(403).json({ error: "Invalid refresh token" });
   }
 });
 
 router.post("/logout", (req, res) => {
+  res.clearCookie("accessToken");
   res.clearCookie("refreshToken");
   res.json({ message: "Logged out successfully" });
 });
