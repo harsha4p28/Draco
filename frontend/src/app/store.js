@@ -1,12 +1,8 @@
-import React from 'react';
-import { configureStore } from '@reduxjs/toolkit'
-import { Provider } from 'react-redux'
+import { configureStore } from '@reduxjs/toolkit';
+import postsReducer from '../features/postsSlice';
 
-
-const store = () => {
-  return (
-    <div>store</div>
-  )
-}
-
-export default store
+export const store = configureStore({
+  reducer: {
+    posts: postsReducer,
+  },
+});

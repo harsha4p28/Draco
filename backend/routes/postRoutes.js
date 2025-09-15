@@ -27,15 +27,23 @@ router.post("/", authMiddleware, upload.single("image"), async (req, res) => {
 
 router.get("/", async (req, res) => {
   try {
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 15;
+
+    const skip = (page - 1) * limit;
+
     const posts = await Post.find()
       .populate("author", "username email")
       .populate("comments.user", "username email")
       .sort({ createdAt: -1 })
-    res.json(posts)
+      .skip(skip)
+      .limit(limit);
+
+    res.json(posts);
   } catch (err) {
-    res.status(500).json({ error: err.message })
+    res.status(500).json({ error: err.message });
   }
-})
+});
 
 router.get("/:id", async (req, res) => {
   try {

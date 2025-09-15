@@ -43,6 +43,8 @@
 .navLogo h2 {
   font-size: 2rem;
   font-weight: bold;
+  text-decoration:none;
+  
 }
 
 .navSearch input {
@@ -122,6 +124,15 @@
   border-radius: 50%;
   object-fit: cover;
   border: 2px solid #ff69b4;
+}
+
+.navProfile img{
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid #ff69b4;
+  transition: all 0.3s ease;
 }
 
 @media (max-width: 768px){

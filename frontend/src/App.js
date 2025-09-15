@@ -9,6 +9,7 @@ import Dashboard from './Dashboard/Dashboard';
 import { useState, useEffect } from 'react';
 import ClipLoader from 'react-spinners/ClipLoader';
 import config from './config'
+import Profile from './Profile/Profile';
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -69,6 +70,7 @@ function App() {
         <Route path="/register" element={!loggedIn ? <Register /> : <Navigate to="/" />} />
         <Route path="/addPost" element={loggedIn ? <Post /> : <Navigate to="/login" />} />
         <Route path="/dashboard" element={loggedIn ? <Dashboard /> : <Navigate to="/login" />} />
+        <Route path="/profile" element={loggedIn ? <Profile /> : <Navigate to="/login" />} />
       </Routes>
     </Router>
   );
