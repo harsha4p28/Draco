@@ -16,10 +16,17 @@ const truncateWords = (text, wordLimit = 150) => {
 const Dashboard = () => {
   const dispatch = useDispatch();
   const didFetch = useRef(false);
-  const { items: posts, page, hasMore, loading } = useSelector((state) => state.posts);
+
+  const {
+    items: posts,
+    page,
+    hasMore,
+    loading,
+    searchResults,
+    searching,
+  } = useSelector((state) => state.posts);
 
   const observer = useRef();
-
   const [expanded, setExpanded] = useState({});
   const [liked, setLiked] = useState({});
   const [likingIds, setLikingIds] = useState(new Set());
@@ -49,9 +56,10 @@ const Dashboard = () => {
 
   useEffect(() => {
     const initial = {};
-    posts.forEach((p) => initial[p._id] = false);
+    const currentList = searchResults.length > 0 ? searchResults : posts;
+    currentList.forEach((p) => (initial[p._id] = false));
     setLiked((prev) => ({ ...initial, ...prev }));
-  }, [posts]);
+  }, [posts, searchResults]);
 
   const toggleExpand = (id) => {
     setExpanded((e) => ({ ...e, [id]: !e[id] }));
@@ -63,9 +71,9 @@ const Dashboard = () => {
     setLiked((prev) => ({ ...prev, [postId]: !prev[postId] }));
 
     try {
-      await fetch(`${config.apiUrl }/posts/like/${postId}`, {
+      await fetch(`${config.apiUrl}/posts/like/${postId}`, {
         method: 'POST',
-        credentials:'include'
+        credentials: 'include',
       });
     } catch (err) {
       setLiked((prev) => ({ ...prev, [postId]: !prev[postId] }));
@@ -86,9 +94,9 @@ const Dashboard = () => {
     try {
       await fetch(`${config.apiUrl}/posts/comment/${postId}`, {
         method: 'POST',
-        credentials:'include',
+        credentials: 'include',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ text })
+        body: JSON.stringify({ text }),
       });
       dispatch(fetchPosts({ page: 1, limit: page * 15 }));
     } catch (err) {
@@ -97,41 +105,53 @@ const Dashboard = () => {
     }
   };
 
+  const listToRender = searchResults.length > 0 ? searchResults : posts;
+
   return (
     <div className="dashboardContainer">
       <div className="dashboardMainContainer">
-        {posts.map((post, index) => {
-          const isLast = posts.length === index + 1;
+        {listToRender.map((post, index) => {
+          const isLast =
+            listToRender.length === index + 1 && searchResults.length === 0; 
           const isExpanded = !!expanded[post._id];
           const content = post.content || '';
           const short = truncateWords(content, 50);
 
           const card = (
             <div className="postCard" key={post._id}>
-              {post.image && <img src={post.image} alt={post.title} className="postImage" />}
+              {post.image && (
+                <img src={post.image} alt={post.title} className="postImage" />
+              )}
               <div className="postContent">
                 <Link to={`/post/${post._id}`}>
-                <h3 className="postTitle">{post.title}</h3>
-                <p className="postText">
-                  {isExpanded ? content : short}
-                  {content.split(/\s+/).length > 150 && (
-                    <button className="readMoreBtn" onClick={() => toggleExpand(post._id)}>
-                      {isExpanded ? ' show less' : ' read more'}
-                    </button>
-                  )}
-                </p>
-                  </Link>
-                
+                  <h3 className="postTitle">{post.title}</h3>
+                  <p className="postText">
+                    {isExpanded ? content : short}
+                    {content.split(/\s+/).length > 150 && (
+                      <button
+                        className="readMoreBtn"
+                        onClick={() => toggleExpand(post._id)}
+                      >
+                        {isExpanded ? ' show less' : ' read more'}
+                      </button>
+                    )}
+                  </p>
+                </Link>
+
                 <div className="postTags">
-                  {Array.isArray(post.tags) && post.tags.map((tag, i) => (
-                    <span key={i} className="tag">{tag}</span>
-                  ))}
+                  {Array.isArray(post.tags) &&
+                    post.tags.map((tag, i) => (
+                      <span key={i} className="tag">
+                        {tag}
+                      </span>
+                    ))}
                 </div>
-                
 
                 <div className="postActions">
                   <button
-                    className={`actionBtn likeBtn ${liked[post._id] ? 'liked' : ''}`}
+                    className={`actionBtn likeBtn ${
+                      liked[post._id] ? 'liked' : ''
+                    }`}
                     onClick={() => handleLike(post._id)}
                     aria-pressed={!!liked[post._id]}
                     title="Like"
@@ -159,12 +179,23 @@ const Dashboard = () => {
             </div>
           );
 
-          if (isLast) return <div ref={lastPostRef} key={post._id}>{card}</div>;
+          if (isLast)
+            return (
+              <div ref={lastPostRef} key={post._id}>
+                {card}
+              </div>
+            );
           return card;
         })}
 
-        {loading && <p>Loading more posts...</p>}
-        {!hasMore && <p>No more posts available.</p>}
+        {loading && searchResults.length === 0 && <p>Loading more posts...</p>}
+        {!hasMore && searchResults.length === 0 && (
+          <p>No more posts available.</p>
+        )}
+        {searching && <p>Searching...</p>}
+        {searchResults.length === 0 && !searching && (
+          <p>No posts found for your search.</p>
+        )}
       </div>
     </div>
   );

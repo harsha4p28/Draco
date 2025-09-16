@@ -97,19 +97,48 @@ router.post("/comment/:id", authMiddleware, async (req, res) => {
 })
 
 
-router.delete("/:id", authMiddleware, async (req, res) => {
+router.delete("/delete/:id", authMiddleware, async (req, res) => {
   try {
-    const post = await Post.findById(req.params.id)
-    if (!post) return res.status(404).json({ message: "Post not found" })
-    if (post.author.toString() !== req.user.id)
-      return res.status(403).json({ message: "Unauthorized" })
+    console.log("User from authMiddleware:", req.user); 
+    const post = await Post.findById(req.params.id);
+    if (!post) return res.status(404).json({ message: "Post not found" });
 
-    await post.remove()
-    res.json({ message: "Post deleted" })
+    if (post.author.toString() !== req.user.id) {
+      return res.status(403).json({ message: "Unauthorized" });
+    }
+
+    await post.deleteOne();
+    console.log(`Post ${req.params.id} deleted by user ${req.user.id}`);
+    res.json({ message: "Post deleted" });
   } catch (err) {
-    res.status(500).json({ error: err.message })
+    console.error("Error deleting post:", err);
+    res.status(500).json({ error: err.message });
   }
-})
+});
+
+
+
+router.put("/:id", authMiddleware, upload.single("image"), async (req, res) => {
+  try {
+    const { title, content, tags } = req.body;
+    const post = await Post.findById(req.params.id);
+
+    if (!post) return res.status(404).json({ message: "Post not found" });
+    if (post.author.toString() !== req.user.id)
+      return res.status(403).json({ message: "Unauthorized" });
+
+    if (title) post.title = title;
+    if (content) post.content = content;
+    if (tags) post.tags = JSON.parse(tags);
+    if (req.file) post.image = req.file.path;
+
+    await post.save();
+    res.json(post);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 
 router.get("/user/:userId", async (req, res) => {
   try {
@@ -124,5 +153,27 @@ router.get("/user/:userId", async (req, res) => {
   }
 });
 
+router.get("/search", async (req, res) => {
+  try {
+    const { query } = req.query;
 
+    if (!query) {
+      return res.status(400).json({ message: "Search query is required" });
+    }
+
+    const posts = await Post.find({
+      $or: [
+        { title: { $regex: query, $options: "i" } },      
+        { tags: { $regex: query, $options: "i" } } 
+      ]
+    })
+      .populate("author", "username email")
+      .populate("comments.user", "username email")
+      .sort({ createdAt: -1 });
+
+    res.json(posts);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
 module.exports = router

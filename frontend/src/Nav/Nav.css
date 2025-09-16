@@ -50,11 +50,11 @@
 .navSearch input {
   padding: 8px 12px;
   border-radius: 20px;
-  border: none;
+  border:none;
   border: 1px solid #555;
   outline: none;
   background: rgba(255,255,255,0.2);
-  color: #fff;
+  color: #000;
   width: 20vw;
   height:5vh;
   transition: all 0.3s ease;

@@ -28,7 +28,8 @@ app.use((req, res, next) => {
 const allowedOrigins = [
   'http://localhost:3000',
   'http://localhost:5173',
-  'https://65b76bf0-880f-41af-bc78-6bf9930d0b4e-00-j7693vnjf8yw.sisko.replit.dev:3000'
+  'https://65b76bf0-880f-41af-bc78-6bf9930d0b4e-00-j7693vnjf8yw.sisko.replit.dev:3000',
+  'https://65b76bf0-880f-41af-bc78-6bf9930d0b4e-00-j7693vnjf8yw.sisko.repl.co:3000'
 ];
 
 mongoose.connect(MONGO_URI, {
@@ -41,7 +42,12 @@ mongoose.connect(MONGO_URI, {
 app.use(
   cors({
     origin: (origin, callback) => {
-      if (!origin || allowedOrigins.includes(origin)) {
+      if (
+        !origin ||
+        allowedOrigins.includes(origin) ||
+        /\.replit\.dev$/.test(origin) ||   
+        /\.repl\.co$/.test(origin)        
+      ) {
         callback(null, true);
       } else {
         callback(new Error('Not allowed by CORS'));
@@ -50,7 +56,6 @@ app.use(
     credentials: true,
   })
 );
-
 app.use('/api', require('./routes/authRoutes'));
 app.use('/api/posts', require('./routes/postRoutes'));
 
