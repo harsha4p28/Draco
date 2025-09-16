@@ -1,0 +1,61 @@
+.postReadContainer {
+  width: 100%;
+  padding: 40px;
+  padding-top:15vh;
+  background-color: #f9f9f9;
+  min-height: 100vh;
+}
+
+.postReadMainContainer {
+  max-width: 800px;
+  margin: 0 auto;
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.postTitle {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #333;
+}
+
+.postDate {
+  font-size: 0.9rem;
+  color: #888;
+}
+
+.postAuthor {
+  font-size: 1rem;
+  font-weight: 500;
+  margin-top: 10px;
+}
+
+.postImage {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin-top: 20px;
+}
+
+.postContent {
+  font-size: 1rem;
+  color: #555;
+  line-height: 1.6;
+  margin-top: 20px;
+}
+
+.commentsSection {
+  margin-top: 30px;
+}
+
+.comment {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+.commentUser {
+  font-weight: bold;
+  font-size: 1rem;
+}

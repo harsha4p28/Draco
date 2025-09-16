@@ -57,7 +57,7 @@ router.get("/:id", async (req, res) => {
   }
 })
 
-router.post("/:id/like", authMiddleware, async (req, res) => {
+router.post("/like/:id", authMiddleware, async (req, res) => {
   try {
     const post = await Post.findById(req.params.id)
     if (!post) return res.status(404).json({ message: "Post not found" })
@@ -77,7 +77,7 @@ router.post("/:id/like", authMiddleware, async (req, res) => {
 })
 
 
-router.post("/:id/comment", authMiddleware, async (req, res) => {
+router.post("/comment/:id", authMiddleware, async (req, res) => {
   try {
     const { text } = req.body
     const post = await Post.findById(req.params.id)

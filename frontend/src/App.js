@@ -1,4 +1,4 @@
-  import './App.css';
+import './App.css';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Home from './Home/Home';
 import Login from './Login/Login';
@@ -10,6 +10,7 @@ import { useState, useEffect } from 'react';
 import ClipLoader from 'react-spinners/ClipLoader';
 import config from './config'
 import Profile from './Profile/Profile';
+import PostRead from './PostRead/PostRead';
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -72,6 +73,7 @@ function App() {
         <Route path="/addPost" element={loggedIn ? <Post /> : <Navigate to="/login" />} />
         <Route path="/dashboard" element={loggedIn ? <Dashboard /> : <Navigate to="/login" />} />
         <Route path="/profile" element={loggedIn ? <Profile userId={user._id} /> : <Navigate to="/login" />} />
+        <Route path="/post/:id" element={<PostRead />} />
       </Routes>
     </Router>
   );
