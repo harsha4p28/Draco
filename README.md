@@ -43,26 +43,10 @@ Implemented three additional features beyond the core requirements:
 
 
 
----
-
-Deployment
-
-Frontend (React): Deployed on Netlify
-
-Backend (Node.js/Express + MongoDB): Deployed on Railway
-
-
-Live Links:
-
-Frontend (Netlify): 
-
-Backend (Railway): 
-
-
 
 ---
 
-Tech Stack
+### Tech Stack
 
 Frontend: React (Redux Toolkit)
 
@@ -72,13 +56,10 @@ Database: MongoDB
 
 Authentication: JWT
 
-Deployment: Netlify (frontend), Railway (backend)
-
-
 
 ---
 
-Use of AI Tools
+### Use of AI Tools
 
 AI tools such as ChatGPT and GitHub Copilot were used for:
 
@@ -87,16 +68,6 @@ AI tools such as ChatGPT and GitHub Copilot were used for:
 - Optimizing frontend state management using redux 
 
 - Styling and designing frontend pages through responsive css
-
-
-
----
-
-Demo
-
-Frontend Live Link (Netlify): 
-
-Backend API (Railway):
 
 
 
@@ -111,8 +82,6 @@ Assignment Requirements Covered
 [x] Author profile with posts list
 
 [x] Bonus features: Search, Infinite Paging, Comment & Like system
-
-[x] Deployment on public services (Netlify & Railway)
 
 
 
