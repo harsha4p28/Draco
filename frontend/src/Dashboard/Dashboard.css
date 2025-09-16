@@ -16,8 +16,11 @@
   background: #fff;
   border-radius: 16px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+
   overflow: hidden;
   display: flex;
+  max-height: 70vh;
+  overflow-y  : auto;
   flex-direction: column;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
@@ -37,6 +40,7 @@
   padding: 16px;
   display: flex;
   flex-direction: column;
+  
   gap: 10px;
 }
 

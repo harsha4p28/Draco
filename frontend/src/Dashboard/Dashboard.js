@@ -5,6 +5,7 @@ import './Dashboard.css';
 
 const Dashboard = () => {
   const dispatch = useDispatch();
+  const didFetch = useRef(false);
   const { items: posts, page, hasMore, loading } = useSelector((state) => state.posts);
 
   const observer = useRef();
@@ -26,8 +27,9 @@ const Dashboard = () => {
   );
 
   useEffect(() => {
-    if (posts.length === 0) {
+    if (!didFetch.current) {
       dispatch(fetchPosts({ page: 1, limit: 15 }));
+      didFetch.current = true;
     }
   }, [dispatch]);
 

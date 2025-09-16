@@ -111,4 +111,18 @@ router.delete("/:id", authMiddleware, async (req, res) => {
   }
 })
 
+router.get("/user/:userId", async (req, res) => {
+  try {
+    const posts = await Post.find({ author: req.params.userId })
+      .populate("author", "username email")
+      .populate("comments.user", "username email")
+      .sort({ createdAt: -1 });
+
+    res.json(posts);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+
 module.exports = router

@@ -43,6 +43,7 @@ function App() {
           setUser({});
         }
       }
+      
     } catch {
       setLoggedIn(false);
       setUser({});
@@ -70,7 +71,7 @@ function App() {
         <Route path="/register" element={!loggedIn ? <Register /> : <Navigate to="/" />} />
         <Route path="/addPost" element={loggedIn ? <Post /> : <Navigate to="/login" />} />
         <Route path="/dashboard" element={loggedIn ? <Dashboard /> : <Navigate to="/login" />} />
-        <Route path="/profile" element={loggedIn ? <Profile /> : <Navigate to="/login" />} />
+        <Route path="/profile" element={loggedIn ? <Profile userId={user._id} /> : <Navigate to="/login" />} />
       </Routes>
     </Router>
   );
