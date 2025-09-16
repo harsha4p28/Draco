@@ -71,7 +71,7 @@ function App() {
         <Route path="/login" element={!loggedIn ? <Login setLoggedIn={setLoggedIn} /> : <Navigate to="/" />} />
         <Route path="/register" element={!loggedIn ? <Register /> : <Navigate to="/" />} />
         <Route path="/addPost" element={loggedIn ? <Post /> : <Navigate to="/login" />} />
-        <Route path="/dashboard" element={loggedIn ? <Dashboard /> : <Navigate to="/login" />} />
+        <Route path="/dashboard" element={loggedIn ? <Dashboard user={user}/> : <Navigate to="/login" />} />
         <Route path="/profile" element={loggedIn ? <Profile userId={user._id} /> : <Navigate to="/login" />} />
         <Route path="/post/:id" element={<PostRead />} />
       </Routes>

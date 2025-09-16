@@ -41,11 +41,11 @@ const Dashboard = () => {
   );
 
   useEffect(() => {
-    if (!didFetch.current) {
+    if (!didFetch.current && posts.length === 0) {
       dispatch(fetchPosts({ page: 1, limit: 15 }));
       didFetch.current = true;
     }
-  }, [dispatch]);
+  }, [dispatch, posts.length]);
 
   useEffect(() => {
     const initial = {};
